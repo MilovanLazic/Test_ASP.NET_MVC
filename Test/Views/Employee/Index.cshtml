@@ -1,0 +1,39 @@
+﻿@model IEnumerable<EmployeeViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Employees</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalTimeWorked)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            <tr class="employee @(item.TotalTimeWorked?.TotalHours < 100 ? "less-than-100-hours" : "")">
+            <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                    @{
+                        var totalTime = item.TotalTimeWorked ?? TimeSpan.Zero;
+                        var totalHours = (int)totalTime.TotalHours;
+                        var totalMinutes = totalTime.Minutes;
+                        var totalSeconds = totalTime.Seconds;
+                    }
+                    @totalHours:@totalMinutes:@totalSeconds
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
